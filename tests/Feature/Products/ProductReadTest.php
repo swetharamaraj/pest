@@ -6,10 +6,21 @@ use App\Models\Product;
 use function Pest\Faker\faker;
 use function Pest\Laravel\{get, getJson, postJson, patchJson, delete};
 
+beforeEach(function () {
 
+    $this->productData =   [
+      'name' => faker()->name(10),
+      'description' => faker()->text('100'),
+      'price' => faker()->numberBetween(100, 100000),
+      'is_active' => faker()->numberBetween(0, 1)
+  ];
+    $this->postJson('api/products', $this->productData)
+    ->assertStatus(201);
+});
 
 it('products show', function() {
-    $this->getJson('api/products/6')
+    $productId = Product::where('name', $this->productData['name'])->value('id');
+    $this->getJson('api/products/' .$productId)
     ->assertStatus(200);
    
 })->group('api', 'products', 'read');
