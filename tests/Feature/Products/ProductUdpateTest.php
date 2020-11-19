@@ -20,16 +20,11 @@ beforeEach(function () {
   
 
 it('products_update_with_payload', function(){
-    $product =   [
-        'name' => faker()->name(10),
-        'description' => faker()->text('100'),
-        'price' => faker()->numberBetween(100, 100000),
-        'is_active' => faker()->numberBetween(0, 1)
-    ];
+ 
     $productId = Product::where('name', $this->productData['name'])->value('id');
-        $this->patchJson('api/products/' .$productId, $product)
+        $this->patchJson('api/products/' .$productId, $this->productData)
         ->assertStatus(200);
-        $this->assertDatabaseHas('products', ['name' => $product['name']]);
+        $this->assertDatabaseHas('products', ['name' => $this->productData['name']]);
 })->group('api','products','update');
 
 

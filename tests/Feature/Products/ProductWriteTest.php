@@ -3,7 +3,7 @@ namespace Database\Factories;
 
 use App\Models\User;
 use App\Models\Product;
-use function Pest\Faker\faker;
+use function Pest\Faker\faker;  
 use function Pest\Laravel\{get, getJson, postJson, patchJson, delete};
 
 $pr      = new \stdClass();
@@ -27,7 +27,7 @@ it('products store with payload', function () use($pr) {
    // $product =  Product::where('name', $pr->data['name'])->first();
     $this->assertDatabaseHas('products',$pr->data);
     $this->assertDatabaseHas('products', ['name' => $pr->data['name']]);
-    $this->assertTrue(Product::exists());
+    $this->assertTrue(Product::exists());   
 })->group('api','products', 'create');
 
 
@@ -38,3 +38,7 @@ it('products store without payload')
    // ->assertDatabaseMissing('products', $product)
     ->group('api', 'products', 'create');
 
+it('expects product data to be valid', function () use($pr){
+   expect($pr->data['name'])->toBeString();
+   expect($pr->data['price'])->toBeNumeric();
+});
