@@ -3,8 +3,13 @@
 use App\Models\User;
 use function Pest\Faker\faker;
 use function Pest\Laravel\{get, getJson, postJson, patchJson, delete};
+use function Tests\actingAs;
 
+// it('redirects to user profile', function () {
+//     $user = factory(User::class)->create();
 
+//     actingAs($user)->get('/')->assertSee($user);
+// });
 // beforeEach(function(){
 
     
